@@ -304,70 +304,115 @@
             </section>
         </main>
     </div>
-
-    <div id="kaizen-side-panel" class="hidden fixed top-0 right-0 h-full w-[400px] bg-white shadow-[-4px_0_15px_rgba(0,0,0,0.1)] z-[10000] overflow-y-auto transition-transform duration-300">
-    <div class="relative h-48 bg-slate-200">
-        <img src="/static/resource/PicIcon/factory_header.jpg" class="w-full h-full object-cover" alt="Location Header">
-        <button onclick="closeKaizenSidePanel()" class="absolute top-4 left-4 bg-white/80 hover:bg-white p-2 rounded-full shadow-md transition-all">
-            <i class="fa-solid fa-xmark text-slate-700"></i>
+    <!--Side Panel-->
+    <div id="kaizen-side-panel" class="fixed top-0 right-0 h-full w-[450px] bg-white shadow-2xl z-[10000] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    
+        <!-- The Parent Header (h-20) -->
+        <div class="relative h-20 bg-slate-800 flex-shrink-0 flex items-center px-6 border-b border-slate-700">
+    
+        <!-- Left: Close Button -->
+        <button onclick="closeKaizenSidePanel()" class="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur-md rounded-full text-white flex items-center justify-center transition-all flex-shrink-0">
+            <i class="fa-solid fa-arrow-right"></i>
         </button>
+
+        <!-- Center: Text Container (flex-1 makes it grow to fill the middle) -->
+        <div class="flex flex-col flex-1 items-center justify-center">
+            <div class="flex items-center gap-2">
+                <span id="badge-status" class="bg-red-500 text-white text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider">新着</span>
+                <span class="text-slate-400 text-[10px] font-bold uppercase tracking-widest">Improvement Proposal Form</span>
+            </div>
+            <h2 id="panel-title-display" class="text-white text-lg font-bold leading-tight">改善提案書</h2>
+        </div>
+
+        <!-- Right: File Icon (flex-shrink-0 keeps it from getting squashed) -->
+        <div class="w-10 flex justify-end opacity-30 flex-shrink-0">
+        <i class="fa-solid fa-file-invoice text-white text-2xl"></i>
+        </div>
     </div>
-
-    <div class="p-6 space-y-6">
-        <div>
-            <h2 id="display-title" class="text-2xl font-bold text-slate-800">New Improvement</h2>
-            <div class="flex gap-2 mt-2">
-                <span id="display-category" class="text-[10px] font-black px-2 py-1 rounded bg-blue-50 text-blue-600 uppercase tracking-wider">Category</span>
-                <span id="display-coords" class="text-[10px] font-mono text-slate-400 mt-1">Y: 0.0, X: 0.0</span>
+    <!--Form Content-->
+    <div class="flex-1 overflow-y-auto p-6 space-y-8 custom-scrollbar">
+        <!--Profile placeholder-->
+        <div class="flex items-center gap-4 bg-slate-50 p-3 rounded-xl border border-slate-100">
+            <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 font-bold">
+                EH
+            </div>
+            <div>
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">制作者</p>
+                <p class="text-sm font-bold text-slate-700">Evan Hyposelenia<span class="font-normal text-slate-400">#66699</span></p>
+            </div>
+            <div class="ml-auto text-right">
+                <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest">Date</p>
+                <p class="text-xs font-mono text-slate-500">2026.03.26</p>
             </div>
         </div>
-
-        <hr class="border-slate-100">
-
-        <div class="space-y-4">
-            <div class="flex items-start gap-4">
-                <i class="fa-solid fa-pen-to-square text-blue-500 mt-1"></i>
-                <div class="flex-1">
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Proposed Title</label>
-                    <input type="text" id="kaizen-title" class="w-full border-b border-slate-200 focus:border-blue-500 py-1 transition-colors outline-none text-sm" placeholder="Add title...">
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-                <i class="fa-solid fa-layer-group text-blue-500 mt-1"></i>
-                <div class="flex-1">
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Category & Priority</label>
-                    <div class="grid grid-cols-2 gap-2">
-                        <select id="kaizen-category" class="text-sm bg-slate-50 p-2 rounded-lg border-none">
-                            <option value="Safety">Safety</option>
-                            <option value="Quality">Quality</option>
-                            <option value="Efficiency">Efficiency</option>
-                        </select>
-                        <select id="kaizen-priority" class="text-sm bg-slate-50 p-2 rounded-lg border-none">
-                            <option value="Low">Low</option>
-                            <option value="Medium" selected>Medium</option>
-                            <option value="High">High</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <div class="flex items-start gap-4">
-                <i class="fa-solid fa-align-left text-blue-500 mt-1"></i>
-                <div class="flex-1">
-                    <label class="block text-[11px] font-bold text-slate-400 uppercase mb-1">Improvement Details</label>
-                    <textarea id="kaizen-description" rows="4" class="w-full bg-slate-50 rounded-xl p-3 text-sm border-none outline-none focus:ring-2 focus:ring-blue-100" placeholder="Describe the issue and solution..."></textarea>
-                </div>
-            </div>
-        </div>
-
-        <div class="pt-4">
-            <button onclick="submitKaizenForm()" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-blue-100 flex items-center justify-center gap-2">
-                <i class="fa-solid fa-paper-plane"></i> Submit Proposal
-            </button>
+        <!--Topics/ Themes -->
+        <div class="space-y-2">
+    <label class="text-[11px] font-black text-slate-400 uppercase tracking-wider block ml-1">
+        改善テーマ <span class="text-[9px] font-normal lowercase tracking-normal">(Theme / Title)</span>
+    </label>
+    
+    <div class="relative group">
+        <textarea 
+            rows="2" 
+            class="w-full bg-slate-50 rounded-2xl p-5 text-xl font-bold text-slate-800 border-2 border-transparent focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-500/10 transition-all outline-none resize-none placeholder:text-slate-300 placeholder:font-medium" 
+            placeholder="改善のテーマを入力してください..."
+        ></textarea>
+        
+        <div class="absolute bottom-3 right-4 opacity-20 group-focus-within:opacity-100 transition-opacity">
+            <i class="fa-solid fa-pen-nib text-blue-500"></i>
         </div>
     </div>
 </div>
+        <!--dropdown location-->
+        <div class="space-y-3">
+            <label class="text-[11px] font-black text-slate-400 uppercase flex items-center gap-2">
+                <i class="fa-solid fa-location-dot text-blue-500"></i> Location Selection
+            </label>
+            
+            <div class="grid grid-cols-1 gap-2">
+                <select id="drop-area" class="form-select-custom" onchange="updateBuildings()">
+                    <option value="">Select Area...</option>
+                    <option value="factory">工場エリア (Factories)</option>
+                    <option value="office">事務・倉庫 (Office & Others)</option>
+                </select>
+                
+                <select id="drop-building" class="form-select-custom hidden">
+                    </select>
+
+                <select id="drop-floor" class="form-select-custom hidden" onchange="showMiniMap()">
+                    </select>
+            </div>
+
+            <div id="mini-map-container" class="hidden h-40 w-full rounded-xl border-2 border-dashed border-slate-200 bg-slate-50 relative overflow-hidden">
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-10">
+                    <i class="fa-solid fa-crosshairs text-blue-500 text-2xl opacity-50"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <div>
+                <label class="text-[11px] font-black text-slate-400 uppercase mb-1 block">Theme / Title</label>
+                <input type="text" placeholder="e.g., Rack safety improvement" class="w-full border-b-2 border-slate-100 focus:border-blue-500 py-2 outline-none transition-colors font-medium">
+            </div>
+
+            <div>
+                <label class="text-[11px] font-black text-slate-400 uppercase mb-1 block">Problem Details</label>
+                <textarea rows="3" class="w-full bg-slate-50 rounded-xl p-3 text-sm border-none focus:ring-2 focus:ring-blue-100" placeholder="Describe the current issue..."></textarea>
+            </div>
+        </div>
+
+    </div>
+
+        <div class="p-4 border-t border-slate-100 bg-white flex gap-2">
+            <button class="flex-1 py-3 px-4 rounded-xl border border-slate-200 text-slate-500 font-bold text-sm hover:bg-slate-50 transition-all">
+                Save Draft
+            </button>
+            <button class="flex-[2] py-3 px-4 rounded-xl bg-blue-600 text-white font-bold text-sm hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all">
+                Submit Proposal
+            </button>
+        </div>
+    </div>
 
     <script src="/static/script.js"></script>
 </body>
